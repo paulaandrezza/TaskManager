@@ -83,7 +83,7 @@ namespace TaskManager
         }
         public static void WaitInput()
         {
-            Console.WriteLine("\nDigite qualquer tecla para continuar...\n");
+            Console.WriteLine("\nDigite qualquer tecla para continuar...");
             Console.ReadKey();
         }
 

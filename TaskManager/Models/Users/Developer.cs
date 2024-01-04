@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.Users
+namespace TaskManager.Models.Users
 {
     internal class Developer : User, IUser
     {
@@ -24,7 +24,7 @@ namespace TaskManager.Users
             {
                 Console.Clear();
                 int selected = options.ShowMenu(Title.HelloDeveloper());
-                if(SelectedChoice(selected))
+                if (SelectedChoice(selected))
                     break;
             }
         }

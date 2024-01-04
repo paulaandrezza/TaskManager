@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskManager.Users;
+using TaskManager.Models.Users;
 
 namespace TaskManager.Authentication
 {
@@ -11,6 +11,7 @@ namespace TaskManager.Authentication
     {
         public static User? PerformAuthentication(List<User> users)
         {
+            Console.Clear();
             Console.Write("Digite o username: ");
             string username = Console.ReadLine();
             Console.Write("Digite a senha: ");
@@ -29,6 +30,7 @@ namespace TaskManager.Authentication
             else
             {
                 Console.WriteLine("Username e/ou senha Incorretos. Tente novamente!");
+                Menu.WaitInput();
             }
         }
     }

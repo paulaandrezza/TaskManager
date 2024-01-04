@@ -1,5 +1,5 @@
-﻿using TaskManager.Service;
-using TaskManager.Users;
+﻿using TaskManager.Models.Users;
+using TaskManager.Service;
 
 namespace TaskManager
 {
@@ -7,7 +7,18 @@ namespace TaskManager
     {
         static void Main(string[] args)
         {
-            User user = Authentication.Authentication.PerformAuthentication(UserRepository.Users());
+            try
+            {
+                while (true)
+                {
+                    User user = Authentication.Authentication.PerformAuthentication(UserRepository.Users());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
         }
     }
 }
