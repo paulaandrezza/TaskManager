@@ -12,7 +12,38 @@ namespace TaskManager.Users
 
         public override void Greet()
         {
-            Console.WriteLine("\nOlá TechLead");
+            TechLeadMenu();
+        }
+
+        private void TechLeadMenu()
+        {
+            string[] techLeadMenu = { "Visualizar Tarefas", "Cadastrar Tarefa", "Assumir Tarefa", "Estatísticas" };
+            Menu options = new Menu(techLeadMenu);
+
+            while (true)
+            {
+                Console.Clear();
+                int selected = options.ShowMenu(Title.HelloDeveloper());
+                if (SelectedChoice(selected))
+                    break;
+            }
+        }
+
+        private bool SelectedChoice(int selected)
+        {
+            switch (selected)
+            {
+                case 0:
+                    return true;
+                case 1:
+                    return true;
+                case 2:
+                    return true;
+                case 3:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

@@ -12,7 +12,34 @@ namespace TaskManager.Users
 
         public override void Greet()
         {
-            Console.WriteLine("\nOlá desenvolvedor");
+            DeveloperMenu();
+        }
+
+        private void DeveloperMenu()
+        {
+            string[] developerMenu = { "Cadastrar Tarefa", "Visualizar Tarefas" };
+            Menu options = new Menu(developerMenu);
+
+            while (true)
+            {
+                Console.Clear();
+                int selected = options.ShowMenu(Title.HelloDeveloper());
+                if(SelectedChoice(selected))
+                    break;
+            }
+        }
+
+        private bool SelectedChoice(int selected)
+        {
+            switch (selected)
+            {
+                case 0:
+                    return true;
+                case 1:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }
