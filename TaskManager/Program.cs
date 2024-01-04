@@ -1,10 +1,13 @@
-﻿namespace TaskManager
+﻿using TaskManager.Service;
+using TaskManager.Users;
+
+namespace TaskManager
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            User user = Authentication.Authentication.PerformAuthentication(UserRepository.Users());
         }
     }
 }
