@@ -21,8 +21,6 @@ namespace TaskManager.Models.Users
             {
                 string[] developerMenu = { "Cadastrar Tarefa", "Visualizar Tarefas", "Deslogar" };
                 Menu options = new Menu(developerMenu);
-
-                Console.Clear();
                 int selected = options.ShowMenu(Title.HelloDeveloper());
                 continueMenu = SelectedChoice(selected);
             }

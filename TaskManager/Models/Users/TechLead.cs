@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Service;
 using TaskManager.UI;
 
 namespace TaskManager.Models.Users
@@ -19,9 +20,7 @@ namespace TaskManager.Models.Users
             {
                 string[] techLeadMenu = { "Visualizar Tarefas", "Cadastrar Tarefa", "Assumir Tarefa", "Estatísticas", "Deslogar" };
                 Menu options = new Menu(techLeadMenu);
-
-                Console.Clear();
-                int selected = options.ShowMenu(Title.HelloTechLead());
+                int selected = options.ShowMenu(title: Title.HelloTechLead());
                 continueMenu = SelectedChoice(selected);
             }
         }
@@ -34,6 +33,7 @@ namespace TaskManager.Models.Users
                     ViewTasks();
                     return true;
                 case 1:
+                    UserRepository.CreateTask(this);
                     return true;
                 case 2:
                     return true;

@@ -17,7 +17,7 @@ namespace TaskManager.UI
             selectedIndex = 0;
         }
 
-        public int ShowMenu(string? title = null)
+        public int ShowMenu(string prompt = "Selecione uma opção: ", string? title = null)
         {
             ConsoleKeyInfo key;
             Console.CursorVisible = false;
@@ -27,12 +27,9 @@ namespace TaskManager.UI
                 do
                 {
                     Console.Clear();
-                    RenderMenu(title);
-
+                    RenderMenu(prompt, title);
                     key = Console.ReadKey(true);
-
                     HandleKeyPress(key);
-
                 } while (key.Key != ConsoleKey.Enter);
             }
             finally
@@ -46,14 +43,14 @@ namespace TaskManager.UI
             return selectedIndex;
         }
 
-        private void RenderMenu(string? title = null)
+        private void RenderMenu(string prompt, string ? title = null)
         {
             if (title != null)
             {
                 Console.WriteLine(title);
             }
 
-            Console.WriteLine("\nSelecione uma opção: \n");
+            Console.WriteLine($"\n{prompt}\n");
 
             for (int i = 0; i < items.Length; i++)
             {

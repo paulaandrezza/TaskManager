@@ -30,12 +30,21 @@ namespace TaskManager.Service
             }
         }
 
-        public static void CreateTask(User creator, User assigne)
+        public static void CreateTask(User creator, User assigne = null)
         {
             Console.WriteLine("Cadastro de Nova Tarefa:");
 
             string title = Utils.ReadString("Título: ");
             string description = Utils.ReadString("Descrição: ");
+
+            if (creator is TechLead)
+            {
+                List<User> developers = Program.AllUsers.Where(u => u is Developer).ToList();
+                string[] developersNames = developers.Select(u => u.Name).ToArray();
+                Menu options = new Menu(developersNames);
+                int selectedIndex = options.ShowMenu("Selecione um desenvolvedor: ");
+                assigne = developers[selectedIndex];
+            }
 
             ProjectTask newTask = new ProjectTask(title, description, creator, assigne);
             Program.AllTasks.Add(newTask);
