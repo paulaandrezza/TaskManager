@@ -19,7 +19,7 @@ namespace TaskManager.Models.Task
         public DateTime? Deadline { get; set; }
         public Enum.TaskStatus Status { get; set; }
 
-        public User Responsible { get; private set; }
+        public User Responsible { get; set; }
         public User Assignee { get; set; }
         public List<ProjectTask>? RelatedTasks { get; set; }
 

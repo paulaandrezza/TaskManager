@@ -36,6 +36,7 @@ namespace TaskManager.Models.Users
                     UserRepository.CreateTask(this);
                     return true;
                 case 2:
+                    UserRepository.TakeTask(this);
                     return true;
                 case 3:
                     return true;

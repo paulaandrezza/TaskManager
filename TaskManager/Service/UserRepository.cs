@@ -91,5 +91,36 @@ namespace TaskManager.Service
             Console.WriteLine($"Ínicio: {task.StartTime}");
             Console.WriteLine($"Prazo final: {task.Deadline}\n");
         }
+
+        public static void TakeTask(TechLead techLead)
+        {
+            Console.WriteLine("Escolha uma tarefa para assumir:");
+
+            var availableTasks = Program.AllTasks.Where(task => task.Status == Models.Enum.TaskStatus.NotStarted && task.Responsible != techLead).ToList();
+
+            if (availableTasks.Count == 0)
+            {
+                Console.WriteLine("Não há tarefas disponíveis para assumir no momento.");
+                Menu.WaitInput();
+                return;
+            }
+
+            string[] taskMenu = availableTasks.Select(task => $"ID: {task.TaskId}, Título: {task.Title}").ToArray();
+            Menu taskOptions = new Menu(taskMenu);
+
+            int selectedTaskIndex = taskOptions.ShowMenu();
+
+            if (selectedTaskIndex >= 0 && selectedTaskIndex < availableTasks.Count)
+            {
+                ProjectTask selectedTask = availableTasks[selectedTaskIndex];
+                selectedTask.Responsible = techLead;
+
+                Console.WriteLine($"Tarefa '{selectedTask.Title}' assumida por {techLead.Name}.");
+            }
+            else
+                Console.WriteLine("Opção inválida.");
+
+            Menu.WaitInput();
+        }
     }
 }
