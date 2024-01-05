@@ -87,6 +87,10 @@ namespace TaskManager.Service
             Console.WriteLine($"Descrição: {task.Description}");
             Console.WriteLine($"Status: {task.Status}");
             Console.WriteLine($"Desenvolvedor: {task.Assignee.Name}");
+            Console.WriteLine($"Responsável: {task.Responsible.Name}");
+            Console.WriteLine($"Criada em: {task.CreatedAt}");
+            Console.WriteLine($"Ínicio: {task.StartTime}");
+            Console.WriteLine($"Prazo final: {task.Deadline}");
             Console.WriteLine();
         }
     }

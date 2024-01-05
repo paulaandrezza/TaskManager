@@ -19,18 +19,18 @@ namespace TaskManager.Models.Task
         public DateTime? Deadline { get; set; }
         public Enum.TaskStatus Status { get; set; }
 
-        public User Creator { get; private set; }
+        public User Responsible { get; private set; }
         public User Assignee { get; set; }
         public List<ProjectTask>? RelatedTasks { get; set; }
 
         private static int TaskIdCounter = 1;
 
-        public ProjectTask(string title, string description, User creator, User assigne)
+        public ProjectTask(string title, string description, User responsible, User assigne)
         {
             TaskId = GenerateUniqueId.Generate(TaskIdCounter);
             Title = title;
             Description = description;
-            Creator = creator;
+            Responsible = responsible;
             Assignee = assigne;
             CreatedAt = DateTime.Now;
             StartTime = null;
