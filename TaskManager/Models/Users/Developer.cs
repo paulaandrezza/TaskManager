@@ -15,20 +15,16 @@ namespace TaskManager.Models.Users
 
         public override void Greet()
         {
-            DeveloperMenu();
-        }
+            bool continueMenu = true;
 
-        private void DeveloperMenu()
-        {
-            string[] developerMenu = { "Cadastrar Tarefa", "Visualizar Tarefas" };
-            Menu options = new Menu(developerMenu);
-
-            while (true)
+            while (continueMenu)
             {
+                string[] developerMenu = { "Cadastrar Tarefa", "Visualizar Tarefas", "Deslogar" };
+                Menu options = new Menu(developerMenu);
+
                 Console.Clear();
                 int selected = options.ShowMenu(Title.HelloDeveloper());
-                if (SelectedChoice(selected))
-                    break;
+                continueMenu = SelectedChoice(selected);
             }
         }
 
@@ -42,6 +38,8 @@ namespace TaskManager.Models.Users
                 case 1:
                     ViewTasks();
                     return true;
+                case 2:
+                    return false;
                 default:
                     return false;
             }

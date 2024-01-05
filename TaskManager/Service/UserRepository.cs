@@ -29,9 +29,9 @@ namespace TaskManager.Service
             }
         }
 
+        public static List<ProjectTask> AllTasks = new List<ProjectTask>();
         public static void ShowTasks(User user)
         {
-            List<ProjectTask> AllTasks = new List<ProjectTask>();
             Console.WriteLine("Visualizar Tarefas:");
 
             if (user is TechLead)

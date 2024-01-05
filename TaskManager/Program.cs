@@ -13,7 +13,6 @@ namespace TaskManager
                 while (true)
                 {
                     User user = Authentication.Authentication.PerformAuthentication(UserRepository.Users());
-                    Menu.WaitInput();
                 }
             }
             catch (Exception ex)
