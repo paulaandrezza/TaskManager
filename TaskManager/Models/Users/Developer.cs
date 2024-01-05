@@ -23,6 +23,7 @@ namespace TaskManager.Models.Users
                 Menu options = new Menu(developerMenu);
                 int selected = options.ShowMenu(Title.HelloDeveloper());
                 continueMenu = SelectedChoice(selected);
+                Menu.WaitInput();
             }
         }
 

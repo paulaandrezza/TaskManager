@@ -51,7 +51,6 @@ namespace TaskManager.Service
             Program.AllTasks.Add(newTask);
 
             Console.WriteLine("Tarefa cadastrada com sucesso!");
-            Menu.WaitInput();
         }
 
         public static void ShowTasks(User user)
@@ -75,8 +74,6 @@ namespace TaskManager.Service
                         PrintTaskDetails(task);
                 }
             }
-
-            Menu.WaitInput();
         }
 
         private static void PrintTaskDetails(ProjectTask task)
@@ -92,16 +89,27 @@ namespace TaskManager.Service
             Console.WriteLine($"Prazo final: {task.Deadline}\n");
         }
 
+        private static List<ProjectTask> GetAvailableTasksForTechLead(TechLead techLead, bool techLeaderIsResponsible = true)
+        {
+            if (techLeaderIsResponsible)
+                return Program.AllTasks
+                    .Where(task => task.Status == Models.Enum.TaskStatus.NotStarted && task.Responsible == techLead)
+                    .ToList();
+            else
+                return Program.AllTasks
+                    .Where(task => task.Status == Models.Enum.TaskStatus.NotStarted && task.Responsible != techLead)
+                    .ToList();
+        }
+
         public static void TakeTask(TechLead techLead)
         {
             Console.WriteLine("Escolha uma tarefa para assumir:");
 
-            var availableTasks = Program.AllTasks.Where(task => task.Status == Models.Enum.TaskStatus.NotStarted && task.Responsible != techLead).ToList();
+            var availableTasks = GetAvailableTasksForTechLead(techLead, false);
 
             if (availableTasks.Count == 0)
             {
                 Console.WriteLine("Não há tarefas disponíveis para assumir no momento.");
-                Menu.WaitInput();
                 return;
             }
 
@@ -119,8 +127,40 @@ namespace TaskManager.Service
             }
             else
                 Console.WriteLine("Opção inválida.");
-
-            Menu.WaitInput();
         }
+
+        public static void SetTaskSchedule(TechLead techLead)
+        {
+            Console.WriteLine("Definir Cronograma de Tarefa:");
+
+            var availableTasks = GetAvailableTasksForTechLead(techLead);
+
+            if (availableTasks.Count > 0)
+            {
+                string[] tasksMenu = availableTasks.Select(task => $"{task.TaskId}: {task.Title}").ToArray();
+                Menu tasksMenuOptions = new Menu(tasksMenu);
+
+                int selectedTaskIndex = tasksMenuOptions.ShowMenu("Selecione a tarefa para definir o cronograma:");
+
+                if (selectedTaskIndex >= 0 && selectedTaskIndex < availableTasks.Count)
+                {
+                    var selectedTask = availableTasks[selectedTaskIndex];
+
+                    var startTime = Utils.ReadDateTime("Digite a data de início (yyyy-MM-dd HH:mm:ss): ");
+                    var deadline = Utils.ReadDateTime("Digite o prazo final (yyyy-MM-dd HH:mm:ss): ");
+
+                    selectedTask.SetSchedule(startTime, deadline);
+                }
+                else
+                {
+                    Console.WriteLine("Opção de tarefa inválida.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Não há tarefas disponíveis para definir o cronograma.");
+            }
+        }
+
     }
 }

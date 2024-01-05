@@ -37,5 +37,19 @@ namespace TaskManager.Models.Task
             Deadline = null;
             Status = Enum.TaskStatus.NotStarted;
         }
+
+        public void SetSchedule(DateTime startTime, DateTime deadline)
+        {
+            if (Responsible == null || Responsible is TechLead)
+            {
+                StartTime = startTime;
+                Deadline = deadline;
+                Console.WriteLine("Cronograma definido com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("Você não tem permissão para definir o cronograma desta tarefa.");
+            }
+        }
     }
 }

@@ -38,5 +38,25 @@ namespace TaskManager.UI
 
             return result;
         }
+
+        public static DateTime ReadDateTime(string prompt)
+        {
+            DateTime result;
+            bool isValidInput;
+
+            do
+            {
+                Console.Write(prompt);
+                isValidInput = DateTime.TryParse(Console.ReadLine(), out result);
+
+                if (!isValidInput)
+                {
+                    Console.WriteLine("Formato de data inválido. Tente novamente.");
+                }
+
+            } while (!isValidInput);
+
+            return result;
+        }
     }
 }
