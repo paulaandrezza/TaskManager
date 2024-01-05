@@ -86,17 +86,5 @@ namespace TaskManager.UI
             Console.WriteLine("\nDigite qualquer tecla para continuar...");
             Console.ReadKey();
         }
-
-        public static int ReadInteger(string prompt)
-        {
-            int result;
-
-            do
-            {
-                Console.Write(prompt + " ");
-            } while (!int.TryParse(Console.ReadLine(), out result));
-
-            return result;
-        }
     }
 }
