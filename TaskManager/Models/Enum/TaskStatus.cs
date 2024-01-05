@@ -13,6 +13,30 @@ namespace TaskManager.Models.Enum
         Completed,
         Abandoned,
         HasIssues,
-        NeedsAproval
+        NeedsApproval
     }
-}
+
+    internal static class TaskStatusExtensions
+    {
+        public static string GetStatusInPortuguese(this TaskStatus status)
+        {
+            switch (status)
+            {
+                case TaskStatus.NotStarted:
+                    return "Não Iniciada";
+                case TaskStatus.InProgress:
+                    return "Em Progresso";
+                case TaskStatus.Completed:
+                    return "Concluída";
+                case TaskStatus.Abandoned:
+                    return "Abandonada";
+                case TaskStatus.HasIssues:
+                    return "Com Problemas";
+                case TaskStatus.NeedsApproval:
+                    return "Aguardando Aprovação";
+                default:
+                    return status.ToString();
+            }
+        }
+    }
+ }

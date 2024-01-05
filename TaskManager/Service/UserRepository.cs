@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Models.Enum;
 using TaskManager.Models.Task;
 using TaskManager.Models.Users;
 using TaskManager.UI;
@@ -50,7 +51,7 @@ namespace TaskManager.Service
             Program.AllTasks.Add(newTask);
 
             Console.WriteLine("Tarefa cadastrada com sucesso!");
-            Console.ReadKey();
+            Menu.WaitInput();
         }
 
         public static void ShowTasks(User user)
@@ -71,13 +72,11 @@ namespace TaskManager.Service
                 else
                 {
                     foreach (var task in userTasks)
-                    {
                         PrintTaskDetails(task);
-                    }
                 }
             }
 
-            Console.ReadKey();
+            Menu.WaitInput();
         }
 
         private static void PrintTaskDetails(ProjectTask task)
@@ -85,13 +84,12 @@ namespace TaskManager.Service
             Console.WriteLine($"Task ID: {task.TaskId}");
             Console.WriteLine($"Título: {task.Title}");
             Console.WriteLine($"Descrição: {task.Description}");
-            Console.WriteLine($"Status: {task.Status}");
+            Console.WriteLine($"Status: {task.Status.GetStatusInPortuguese()}");
             Console.WriteLine($"Desenvolvedor: {task.Assignee.Name}");
             Console.WriteLine($"Responsável: {task.Responsible.Name}");
             Console.WriteLine($"Criada em: {task.CreatedAt}");
             Console.WriteLine($"Ínicio: {task.StartTime}");
-            Console.WriteLine($"Prazo final: {task.Deadline}");
-            Console.WriteLine();
+            Console.WriteLine($"Prazo final: {task.Deadline}\n");
         }
     }
 }
