@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Service;
 
 namespace TaskManager.Models.Users
 {
@@ -20,5 +21,10 @@ namespace TaskManager.Models.Users
         }
 
         public abstract void Greet();
+
+        protected void ViewTasks()
+        {
+            UserRepository.ShowTasks(this);
+        }
     }
 }

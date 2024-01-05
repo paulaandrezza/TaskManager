@@ -58,10 +58,5 @@ namespace TaskManager.Models.Users
             Console.WriteLine("Tarefa cadastrada com sucesso!");
             Console.ReadKey();
         }
-
-        private void ViewTasks()
-        {
-            UserRepository.ShowTasks(this);
-        }
     }
 }

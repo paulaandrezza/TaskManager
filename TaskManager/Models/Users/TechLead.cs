@@ -13,20 +13,16 @@ namespace TaskManager.Models.Users
 
         public override void Greet()
         {
-            TechLeadMenu();
-        }
+            bool continueMenu = true;
 
-        private void TechLeadMenu()
-        {
-            string[] techLeadMenu = { "Visualizar Tarefas", "Cadastrar Tarefa", "Assumir Tarefa", "Estatísticas" };
-            Menu options = new Menu(techLeadMenu);
-
-            while (true)
+            while (continueMenu)
             {
+                string[] techLeadMenu = { "Visualizar Tarefas", "Cadastrar Tarefa", "Assumir Tarefa", "Estatísticas", "Deslogar" };
+                Menu options = new Menu(techLeadMenu);
+
                 Console.Clear();
-                int selected = options.ShowMenu(Title.HelloDeveloper());
-                if (SelectedChoice(selected))
-                    break;
+                int selected = options.ShowMenu(Title.HelloTechLead());
+                continueMenu = SelectedChoice(selected);
             }
         }
 
@@ -35,6 +31,7 @@ namespace TaskManager.Models.Users
             switch (selected)
             {
                 case 0:
+                    ViewTasks();
                     return true;
                 case 1:
                     return true;
@@ -42,6 +39,8 @@ namespace TaskManager.Models.Users
                     return true;
                 case 3:
                     return true;
+                case 4:
+                    return false;
                 default:
                     return false;
             }
