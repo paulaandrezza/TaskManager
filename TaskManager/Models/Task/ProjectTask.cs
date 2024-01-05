@@ -7,9 +7,9 @@ using TaskManager.Models.Enum;
 using TaskManager.Models.Users;
 using TaskManager.Service;
 
-namespace TaskManager.Models.Tasks
+namespace TaskManager.Models.Task
 {
-    internal class Task
+    internal class ProjectTask
     {
         public int TaskId { get; private set; }
         public string Title { get; set; }
@@ -21,15 +21,17 @@ namespace TaskManager.Models.Tasks
 
         public User Creator { get; private set; }
         public User Assignee { get; set; }
-        public List<Task> RelatedTasks { get; set; }
+        public List<ProjectTask>? RelatedTasks { get; set; }
 
         private static int TaskIdCounter = 1;
 
-        public Task(string title, string description, User creator)
+        public ProjectTask(string title, string description, User creator, User assigne)
         {
             TaskId = GenerateUniqueId.Generate(TaskIdCounter);
             Title = title;
             Description = description;
+            Creator = creator;
+            Assignee = assigne;
             CreatedAt = DateTime.Now;
             StartTime = null;
             Deadline = null;

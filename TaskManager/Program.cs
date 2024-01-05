@@ -1,5 +1,6 @@
 ﻿using TaskManager.Models.Users;
 using TaskManager.Service;
+using TaskManager.UI;
 
 namespace TaskManager
 {
@@ -12,6 +13,7 @@ namespace TaskManager
                 while (true)
                 {
                     User user = Authentication.Authentication.PerformAuthentication(UserRepository.Users());
+                    Menu.WaitInput();
                 }
             }
             catch (Exception ex)

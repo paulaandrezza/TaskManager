@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Models.Task;
 using TaskManager.Models.Users;
 
 namespace TaskManager.Service
@@ -26,6 +27,44 @@ namespace TaskManager.Service
             {
                 Console.WriteLine("\n" + user.ToString());
             }
+        }
+
+        public static void ShowTasks(User user)
+        {
+            List<ProjectTask> AllTasks = new List<ProjectTask>();
+            Console.WriteLine("Visualizar Tarefas:");
+
+            if (user is TechLead)
+            {
+                foreach (var task in AllTasks)
+                    PrintTaskDetails(task);
+            }
+            else
+            {
+                var userTasks = AllTasks.Where(task => task.Assignee == user).ToList();
+
+                if (userTasks.Count == 0)
+                    Console.WriteLine("Sem tarefas cadastradas.");
+                else
+                {
+                    foreach (var task in userTasks)
+                    {
+                        PrintTaskDetails(task);
+                    }
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        private static void PrintTaskDetails(ProjectTask task)
+        {
+            Console.WriteLine($"Task ID: {task.TaskId}");
+            Console.WriteLine($"Título: {task.Title}");
+            Console.WriteLine($"Descrição: {task.Description}");
+            Console.WriteLine($"Status: {task.Status}");
+            Console.WriteLine($"Desenvolvedor: {task.Assignee.Name}");
+            Console.WriteLine();
         }
     }
 }

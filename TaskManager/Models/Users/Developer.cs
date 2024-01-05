@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Models.Task;
+using TaskManager.Service;
+using TaskManager.UI;
 
 namespace TaskManager.Models.Users
 {
@@ -34,12 +37,32 @@ namespace TaskManager.Models.Users
             switch (selected)
             {
                 case 0:
+                    CreateTask();
                     return true;
                 case 1:
+                    ViewTasks();
                     return true;
                 default:
                     return false;
             }
+        }
+
+        private void CreateTask()
+        {
+            Console.WriteLine("Cadastro de Nova Tarefa:");
+
+            string title = Utils.ReadString("Título: ");
+            string description = Utils.ReadString("Descrição: ");
+
+            ProjectTask newTask = new ProjectTask(title, description, this, this);
+
+            Console.WriteLine("Tarefa cadastrada com sucesso!");
+            Console.ReadKey();
+        }
+
+        private void ViewTasks()
+        {
+            UserRepository.ShowTasks(this);
         }
     }
 }
