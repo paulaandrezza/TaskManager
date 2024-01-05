@@ -53,6 +53,7 @@ namespace TaskManager.Models.Users
             string description = Utils.ReadString("Descrição: ");
 
             ProjectTask newTask = new ProjectTask(title, description, this, this);
+            Program.AllTasks.Add(newTask);
 
             Console.WriteLine("Tarefa cadastrada com sucesso!");
             Console.ReadKey();

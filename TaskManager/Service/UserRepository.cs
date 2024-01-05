@@ -29,19 +29,18 @@ namespace TaskManager.Service
             }
         }
 
-        public static List<ProjectTask> AllTasks = new List<ProjectTask>();
         public static void ShowTasks(User user)
         {
             Console.WriteLine("Visualizar Tarefas:");
 
             if (user is TechLead)
             {
-                foreach (var task in AllTasks)
+                foreach (var task in Program.AllTasks)
                     PrintTaskDetails(task);
             }
             else
             {
-                var userTasks = AllTasks.Where(task => task.Assignee == user).ToList();
+                var userTasks = Program.AllTasks.Where(task => task.Assignee == user).ToList();
 
                 if (userTasks.Count == 0)
                     Console.WriteLine("Sem tarefas cadastradas.");
