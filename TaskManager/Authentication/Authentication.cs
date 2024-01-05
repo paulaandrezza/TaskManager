@@ -13,6 +13,7 @@ namespace TaskManager.Authentication
         public static User? PerformAuthentication(List<User> users)
         {
             Console.Clear();
+            Console.WriteLine(Title.TaskManagerTitle());
             Console.Write("Digite o username: ");
             string username = Console.ReadLine();
             Console.Write("Digite a senha: ");

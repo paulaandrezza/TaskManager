@@ -33,7 +33,7 @@ namespace TaskManager.Models.Users
             switch (selected)
             {
                 case 0:
-                    CreateTask();
+                    UserRepository.CreateTask(this, this);
                     return true;
                 case 1:
                     ViewTasks();
@@ -43,20 +43,6 @@ namespace TaskManager.Models.Users
                 default:
                     return false;
             }
-        }
-
-        private void CreateTask()
-        {
-            Console.WriteLine("Cadastro de Nova Tarefa:");
-
-            string title = Utils.ReadString("Título: ");
-            string description = Utils.ReadString("Descrição: ");
-
-            ProjectTask newTask = new ProjectTask(title, description, this, this);
-            Program.AllTasks.Add(newTask);
-
-            Console.WriteLine("Tarefa cadastrada com sucesso!");
-            Console.ReadKey();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Models.Task;
 using TaskManager.Models.Users;
+using TaskManager.UI;
 
 namespace TaskManager.Service
 {
@@ -27,6 +28,20 @@ namespace TaskManager.Service
             {
                 Console.WriteLine("\n" + user.ToString());
             }
+        }
+
+        public static void CreateTask(User creator, User assigne)
+        {
+            Console.WriteLine("Cadastro de Nova Tarefa:");
+
+            string title = Utils.ReadString("Título: ");
+            string description = Utils.ReadString("Descrição: ");
+
+            ProjectTask newTask = new ProjectTask(title, description, creator, assigne);
+            Program.AllTasks.Add(newTask);
+
+            Console.WriteLine("Tarefa cadastrada com sucesso!");
+            Console.ReadKey();
         }
 
         public static void ShowTasks(User user)
