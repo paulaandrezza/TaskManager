@@ -82,19 +82,17 @@ namespace TaskManager.Service
                     .ToList();
         }
 
-        public static void TakeTask(TechLead techLead)
+        public static ProjectTask? ListTasks(TechLead techLead, bool techLeaderIsResponsible = true)
         {
-            Console.WriteLine("Escolha uma tarefa para assumir:");
-
             var availableTasks = GetAvailableTasksForTechLead(techLead, false);
 
             if (availableTasks.Count == 0)
             {
-                Console.WriteLine("Não há tarefas disponíveis para assumir no momento.");
-                return;
+                Console.WriteLine("Não há tarefas disponíveis no momento.");
+                return null;
             }
 
-            string[] taskMenu = availableTasks.Select(task => $"ID: {task.TaskId}, Título: {task.Title}").ToArray();
+            string[] taskMenu = availableTasks.Select(task => $"ID: {task.TaskId}, Título: {task.Title}, Desenvolvedor: {task.Assignee}").ToArray();
             Menu taskOptions = new Menu(taskMenu);
 
             int selectedTaskIndex = taskOptions.ShowMenu();
@@ -102,12 +100,12 @@ namespace TaskManager.Service
             if (selectedTaskIndex >= 0 && selectedTaskIndex < availableTasks.Count)
             {
                 ProjectTask selectedTask = availableTasks[selectedTaskIndex];
-                selectedTask.Responsible = techLead;
-
-                Console.WriteLine($"Tarefa '{selectedTask.Title}' assumida por {techLead.Name}.");
+                return selectedTask;
             }
             else
                 Console.WriteLine("Opção inválida.");
+            
+            return null;
         }
 
         public static void SetTaskSchedule(TechLead techLead)
@@ -150,6 +148,19 @@ namespace TaskManager.Service
             return Program.AllTasks
                 .Where(task => task.Deadline.HasValue && task.Deadline < currentDate)
                 .ToList();
+        }
+
+        public static void ChangeTaskStatus(ProjectTask task, Models.Enum.TaskStatus newStatus)
+        {
+            if (task != null)
+            {
+                task.Status = newStatus;
+                Console.WriteLine($"Status da Tarefa {task.TaskId} alterado para {newStatus.GetStatusInPortuguese()}");
+            }
+            else
+                Console.WriteLine("Tarefa não encontrada.");
+
+            Menu.WaitInput();
         }
     }
 }

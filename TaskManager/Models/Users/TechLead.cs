@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Models.Enum;
 using TaskManager.Models.Task;
 using TaskManager.Service;
 using TaskManager.UI;
@@ -38,7 +39,7 @@ namespace TaskManager.Models.Users
                     TaskRepository.CreateTask(this);
                     return true;
                 case 2:
-                    TaskRepository.TakeTask(this);
+                    TakeTask(this);
                     return true;
                 case 3:
                     TaskRepository.SetTaskSchedule(this);
@@ -53,13 +54,27 @@ namespace TaskManager.Models.Users
             }
         }
 
+        private static void TakeTask(TechLead techLead)
+        {
+            ProjectTask? selectedTask = TaskRepository.ListTasks(techLead, false);
+
+            Console.WriteLine("Escolha uma tarefa para assumir:");
+            if (selectedTask != null)
+            {
+                selectedTask.Responsible = techLead;
+                Console.WriteLine($"Tarefa '{selectedTask.Title}' assumida por {techLead.Name}.");
+            }
+            else
+                Console.WriteLine("Nenhuma tarefa selecionada ou disponível para assumir.");
+        }
+
         private void Statistics()
         {
             bool continueMenu = true;
 
             while (continueMenu)
             {
-                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefa Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas em Análise", "Tarefas a serem Aprovadas", "Voltar" };
+                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefa Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas em Análise", "Tarefas a serem Aprovadas", "Alterar Status de uma Tarefa", "Voltar" };
                 Menu options = new Menu(StatisticsMenu);
                 int selected = options.ShowMenu(title: Title.HelloTechLead());
                 continueMenu = StatisticsSelectedChoice(selected);
@@ -85,13 +100,15 @@ namespace TaskManager.Models.Users
                 case 5:
                     return true;
                 case 6:
+                    return true;
+                case 7:
                     return false;
                 default:
                     return false;
             }
         }
 
-        public void ViewTasksOverdue()
+        private void ViewTasksOverdue()
         {
             List<ProjectTask> tasksOverdue = TaskRepository.GetTasksOverdue();
 
