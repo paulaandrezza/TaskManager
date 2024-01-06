@@ -8,7 +8,7 @@ namespace TaskManager
     internal class Program
     {
         public static List<ProjectTask> AllTasks = new List<ProjectTask>();
-        public static List<User> AllUsers = new List<User>(UserRepository.Users());
+        public static List<User> AllUsers = new List<User>(UserRepository.LoadDevelopersFromFile());
         static void Main(string[] args)
         {
             try

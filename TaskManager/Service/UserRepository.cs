@@ -12,23 +12,41 @@ namespace TaskManager.Service
 {
     internal class UserRepository
     {
-        public static List<User> Users()
-        {
-            return new List<User>
-        {
-            new TechLead("Carol", "carol", "12345678"),
-            new Developer("Paula", "paula", "12345678"),
-            new Developer("Vitória", "vitoria", "12345678")
-        };
-        }
-        public static void ShowUsers()
-        {
-            Console.WriteLine("Users:");
+        private static string DevelopersFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Service", "developers.csv");
 
-            foreach (var user in Users())
+        public static List<User> LoadDevelopersFromFile()
+        {
+            List<User> users = new List<User>();
+            try
             {
-                Console.WriteLine("\n" + user.ToString());
+                if (File.Exists(DevelopersFilePath))
+                {
+                    string[] lines = File.ReadAllLines(DevelopersFilePath);
+
+                    foreach (string line in lines)
+                    {
+                        string[] parts = line.Split(',');
+
+                        if (parts.Length == 4)
+                        {
+                            string name = parts[1].Trim();
+                            string username = parts[2].Trim();
+                            string password = parts[3].Trim();
+
+                            if (parts[0] == "TechLead")
+                                users.Add(new TechLead(name, username, password));
+                            else if (parts[0] == "Developer")
+                                users.Add(new Developer(name, username, password));
+                        }
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao ler o arquivo de desenvolvedores: {ex.Message}");
+            }
+
+            return users;
         }
     }
 }
