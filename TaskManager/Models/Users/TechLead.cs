@@ -74,7 +74,7 @@ namespace TaskManager.Models.Users
 
             while (continueMenu)
             {
-                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas a serem Aprovadas", "Alterar Status de uma Tarefa", "Voltar" };
+                string[] StatisticsMenu = { "Tarefas em Atraso", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas Em Progresso", "Tarefas com Impedimento", "Tarefas Aguardando Aprovação", "Alterar Status de uma Tarefa", "Voltar" };
                 Menu options = new Menu(StatisticsMenu);
                 int selected = options.ShowMenu(title: Title.HelloTechLead());
                 continueMenu = StatisticsSelectedChoice(selected);
@@ -96,15 +96,18 @@ namespace TaskManager.Models.Users
                     ViewTasksWithStatus(Enum.TaskStatus.Abandoned);
                     return true;
                 case 3:
-                    ViewTasksWithStatus(Enum.TaskStatus.HasIssues);
+                    ViewTasksWithStatus(Enum.TaskStatus.InProgress);
                     return true;
                 case 4:
-                    ViewTasksWithStatus(Enum.TaskStatus.NeedsApproval);
+                    ViewTasksWithStatus(Enum.TaskStatus.HasIssues);
                     return true;
                 case 5:
-                    ChangeTaskStatus(this);
+                    ViewTasksWithStatus(Enum.TaskStatus.NeedsApproval);
                     return true;
                 case 6:
+                    ChangeTaskStatus(this);
+                    return true;
+                case 7:
                     return false;
                 default:
                     return false;

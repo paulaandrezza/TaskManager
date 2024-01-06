@@ -109,16 +109,17 @@ namespace TaskManager.Service
         {
             Console.WriteLine("Escolha um novo status:");
 
-            string[] statusOptions = Enum.GetNames(typeof(Models.Enum.TaskStatus));
-            Menu statusMenu = new Menu(statusOptions);
+            var statusOptions = Enum.GetValues(typeof(Models.Enum.TaskStatus))
+                            .Cast<Models.Enum.TaskStatus>()
+                            .ToArray();
+
+            string[] statusMenuOptions = statusOptions.Select(status => status.GetStatusInPortuguese()).ToArray();
+            Menu statusMenu = new Menu(statusMenuOptions);
 
             int selectedStatusIndex = statusMenu.ShowMenu();
 
             if (selectedStatusIndex >= 0 && selectedStatusIndex < statusOptions.Length)
-            {
-                if (Enum.TryParse<Models.Enum.TaskStatus>(statusOptions[selectedStatusIndex], out Models.Enum.TaskStatus selectedStatus))
-                    return selectedStatus;
-            }
+                return statusOptions[selectedStatusIndex];
 
             Console.WriteLine("Opção inválida. O status será mantido inalterado.");
             return null;
