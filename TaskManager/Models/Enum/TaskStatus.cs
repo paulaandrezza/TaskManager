@@ -32,7 +32,7 @@ namespace TaskManager.Models.Enum
                 case TaskStatus.Abandoned:
                     return "Abandonada";
                 case TaskStatus.HasIssues:
-                    return "Com Problemas";
+                    return "Com Impedimento";
                 case TaskStatus.NeedsApproval:
                     return "Aguardando Aprovação";
                 default:

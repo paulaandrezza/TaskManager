@@ -74,7 +74,7 @@ namespace TaskManager.Models.Users
 
             while (continueMenu)
             {
-                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas em Análise", "Tarefas a serem Aprovadas", "Alterar Status de uma Tarefa", "Voltar" };
+                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas a serem Aprovadas", "Alterar Status de uma Tarefa", "Voltar" };
                 Menu options = new Menu(StatisticsMenu);
                 int selected = options.ShowMenu(title: Title.HelloTechLead());
                 continueMenu = StatisticsSelectedChoice(selected);
@@ -90,20 +90,21 @@ namespace TaskManager.Models.Users
                     ViewTasksOverdue();
                     return true;
                 case 1:
-                    ViewCompletedTasks();
+                    ViewTasksWithStatus(Enum.TaskStatus.Completed);
                     return true;
                 case 2:
+                    ViewTasksWithStatus(Enum.TaskStatus.Abandoned);
                     return true;
                 case 3:
+                    ViewTasksWithStatus(Enum.TaskStatus.HasIssues);
                     return true;
                 case 4:
+                    ViewTasksWithStatus(Enum.TaskStatus.NeedsApproval);
                     return true;
                 case 5:
-                    return true;
-                case 6:
                     ChangeTaskStatus(this);
                     return true;
-                case 7:
+                case 6:
                     return false;
                 default:
                     return false;
@@ -124,16 +125,17 @@ namespace TaskManager.Models.Users
             }
         }
 
-        private void ViewCompletedTasks()
+        private void ViewTasksWithStatus(Enum.TaskStatus status)
         {
-            var completedTasks = Program.AllTasks.Where(task => task.Status == Enum.TaskStatus.Completed).ToList();
+            var tasks = Program.AllTasks.Where(task => task.Status == status).ToList();
+            string statusMessage = status.GetStatusInPortuguese();
 
-            if (completedTasks.Count == 0)
-                Console.WriteLine("Nenhuma tarefa concluída encontrada.");
+            if (tasks.Count == 0)
+                Console.WriteLine($"Nenhuma tarefa {statusMessage} encontrada.");
             else
             {
-                Console.WriteLine("Tarefas Concluídas:");
-                foreach (var task in completedTasks)
+                Console.WriteLine($"Tarefas {statusMessage}:");
+                foreach (var task in tasks)
                     TaskRepository.PrintTaskDetails(task);
             }
         }
