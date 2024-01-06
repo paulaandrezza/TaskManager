@@ -126,7 +126,7 @@ namespace TaskManager.Models.Users
 
         private void ViewCompletedTasks()
         {
-            var completedTasks = Program.AllTasks.Where(task => task.IsCompleted()).ToList();
+            var completedTasks = Program.AllTasks.Where(task => task.Status == Enum.TaskStatus.Completed).ToList();
 
             if (completedTasks.Count == 0)
                 Console.WriteLine("Nenhuma tarefa concluída encontrada.");
