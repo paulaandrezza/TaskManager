@@ -90,6 +90,7 @@ namespace TaskManager.Models.Users
                     ViewTasksOverdue();
                     return true;
                 case 1:
+                    ViewCompletedTasks();
                     return true;
                 case 2:
                     return true;
@@ -119,6 +120,20 @@ namespace TaskManager.Models.Users
             {
                 Console.WriteLine("Tarefas em Atraso:");
                 foreach (var task in tasksOverdue)
+                    TaskRepository.PrintTaskDetails(task);
+            }
+        }
+
+        private void ViewCompletedTasks()
+        {
+            var completedTasks = Program.AllTasks.Where(task => task.IsCompleted()).ToList();
+
+            if (completedTasks.Count == 0)
+                Console.WriteLine("Nenhuma tarefa concluída encontrada.");
+            else
+            {
+                Console.WriteLine("Tarefas Concluídas:");
+                foreach (var task in completedTasks)
                     TaskRepository.PrintTaskDetails(task);
             }
         }

@@ -38,6 +38,12 @@ namespace TaskManager.Models.Task
             Status = Enum.TaskStatus.NotStarted;
         }
 
+        public bool IsCompleted()
+        {
+            return Status == Enum.TaskStatus.Completed;
+        }
+
+
         public void SetSchedule(DateTime startTime, DateTime deadline)
         {
             if (Responsible == null || Responsible is TechLead)
