@@ -43,8 +43,46 @@ namespace TaskManager.Models.Users
                     UserRepository.SetTaskSchedule(this);
                     return true;
                 case 4:
+                    Statistics();
                     return true;
                 case 5:
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        private void Statistics()
+        {
+            bool continueMenu = true;
+
+            while (continueMenu)
+            {
+                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefa Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas em Análise", "Tarefas a serem Aprovadas", "Voltar" };
+                Menu options = new Menu(StatisticsMenu);
+                int selected = options.ShowMenu(title: Title.HelloTechLead());
+                continueMenu = StatisticsSelectedChoice(selected);
+                Menu.WaitInput();
+            }
+        }
+
+        private bool StatisticsSelectedChoice(int selected)
+        {
+            switch (selected)
+            {
+                case 0:
+                    return true;
+                case 1:
+                    return true;
+                case 2:
+                    return true;
+                case 3:
+                    return true;
+                case 4:
+                    return true;
+                case 5:
+                    return true;
+                case 6:
                     return false;
                 default:
                     return false;
