@@ -74,7 +74,7 @@ namespace TaskManager.Models.Users
 
             while (continueMenu)
             {
-                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefa Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas em Análise", "Tarefas a serem Aprovadas", "Alterar Status de uma Tarefa", "Voltar" };
+                string[] StatisticsMenu = { "Tarefas em atraso", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas com Impedimento", "Tarefas em Análise", "Tarefas a serem Aprovadas", "Alterar Status de uma Tarefa", "Voltar" };
                 Menu options = new Menu(StatisticsMenu);
                 int selected = options.ShowMenu(title: Title.HelloTechLead());
                 continueMenu = StatisticsSelectedChoice(selected);
