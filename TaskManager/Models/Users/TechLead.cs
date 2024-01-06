@@ -34,13 +34,13 @@ namespace TaskManager.Models.Users
                     ViewTasks();
                     return true;
                 case 1:
-                    UserRepository.CreateTask(this);
+                    TaskRepository.CreateTask(this);
                     return true;
                 case 2:
-                    UserRepository.TakeTask(this);
+                    TaskRepository.TakeTask(this);
                     return true;
                 case 3:
-                    UserRepository.SetTaskSchedule(this);
+                    TaskRepository.SetTaskSchedule(this);
                     return true;
                 case 4:
                     Statistics();

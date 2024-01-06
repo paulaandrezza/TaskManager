@@ -24,7 +24,7 @@ namespace TaskManager.Models.Users
 
         protected void ViewTasks()
         {
-            UserRepository.ShowTasks(this);
+            TaskRepository.ShowTasks(this);
         }
     }
 }

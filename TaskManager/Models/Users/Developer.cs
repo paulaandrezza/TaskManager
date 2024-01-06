@@ -32,7 +32,7 @@ namespace TaskManager.Models.Users
             switch (selected)
             {
                 case 0:
-                    UserRepository.CreateTask(this, this);
+                    TaskRepository.CreateTask(this, this);
                     return true;
                 case 1:
                     ViewTasks();
