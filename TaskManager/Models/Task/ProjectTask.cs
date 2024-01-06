@@ -51,5 +51,10 @@ namespace TaskManager.Models.Task
                 Console.WriteLine("Você não tem permissão para definir o cronograma desta tarefa.");
             }
         }
+
+        public void SetStatus(Enum.TaskStatus status)
+        {
+            Status = status;
+        }
     }
 }

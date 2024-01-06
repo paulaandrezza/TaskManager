@@ -58,14 +58,14 @@ namespace TaskManager.Models.Users
         {
             ProjectTask? selectedTask = TaskRepository.ListTasks(techLead, false);
 
-            Console.WriteLine("Escolha uma tarefa para assumir:");
             if (selectedTask != null)
             {
+                Console.WriteLine("Escolha uma tarefa para assumir:");
                 selectedTask.Responsible = techLead;
                 Console.WriteLine($"Tarefa '{selectedTask.Title}' assumida por {techLead.Name}.");
             }
             else
-                Console.WriteLine("Nenhuma tarefa selecionada ou disponível para assumir.");
+                Console.WriteLine("Nenhuma tarefa disponível para assumir.");
         }
 
         private void Statistics()
@@ -100,6 +100,7 @@ namespace TaskManager.Models.Users
                 case 5:
                     return true;
                 case 6:
+                    ChangeTaskStatus(this);
                     return true;
                 case 7:
                     return false;
@@ -120,6 +121,22 @@ namespace TaskManager.Models.Users
                 foreach (var task in tasksOverdue)
                     TaskRepository.PrintTaskDetails(task);
             }
+        }
+
+        private void ChangeTaskStatus(TechLead techLead)
+        {
+            ProjectTask? selectedTask = TaskRepository.ListTasks(techLead);
+
+            if (selectedTask != null)
+            {
+                Console.WriteLine("Escolha uma tarefa para alterar o status:");
+                Console.WriteLine($"Status atual da Tarefa {selectedTask.TaskId}: {selectedTask.Status.GetStatusInPortuguese()}");
+                Models.Enum.TaskStatus? newStatus = TaskRepository.ChooseTaskStatus();
+                if (newStatus.HasValue)
+                    selectedTask.SetStatus(newStatus.Value);
+            }
+            else
+                Console.WriteLine("Nenhuma tarefa disponível para alterar o status.");
         }
     }
 }

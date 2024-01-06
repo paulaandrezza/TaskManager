@@ -84,15 +84,12 @@ namespace TaskManager.Service
 
         public static ProjectTask? ListTasks(TechLead techLead, bool techLeaderIsResponsible = true)
         {
-            var availableTasks = GetAvailableTasksForTechLead(techLead, false);
+            var availableTasks = GetAvailableTasksForTechLead(techLead, techLeaderIsResponsible);
 
             if (availableTasks.Count == 0)
-            {
-                Console.WriteLine("Não há tarefas disponíveis no momento.");
                 return null;
-            }
 
-            string[] taskMenu = availableTasks.Select(task => $"ID: {task.TaskId}, Título: {task.Title}, Desenvolvedor: {task.Assignee}").ToArray();
+            string[] taskMenu = availableTasks.Select(task => $"ID: {task.TaskId}, Título: {task.Title}, Desenvolvedor: {task.Assignee.Name}").ToArray();
             Menu taskOptions = new Menu(taskMenu);
 
             int selectedTaskIndex = taskOptions.ShowMenu();
@@ -105,6 +102,25 @@ namespace TaskManager.Service
             else
                 Console.WriteLine("Opção inválida.");
             
+            return null;
+        }
+
+        public static Models.Enum.TaskStatus? ChooseTaskStatus()
+        {
+            Console.WriteLine("Escolha um novo status:");
+
+            string[] statusOptions = Enum.GetNames(typeof(Models.Enum.TaskStatus));
+            Menu statusMenu = new Menu(statusOptions);
+
+            int selectedStatusIndex = statusMenu.ShowMenu();
+
+            if (selectedStatusIndex >= 0 && selectedStatusIndex < statusOptions.Length)
+            {
+                if (Enum.TryParse<Models.Enum.TaskStatus>(statusOptions[selectedStatusIndex], out Models.Enum.TaskStatus selectedStatus))
+                    return selectedStatus;
+            }
+
+            Console.WriteLine("Opção inválida. O status será mantido inalterado.");
             return null;
         }
 
