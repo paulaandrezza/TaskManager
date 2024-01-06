@@ -62,6 +62,7 @@ namespace TaskManager.Models.Users
             {
                 Console.WriteLine("Escolha uma tarefa para assumir:");
                 selectedTask.Responsible = techLead;
+                selectedTask.SetStatus(Models.Enum.TaskStatus.NotStarted);
                 Console.WriteLine($"Tarefa '{selectedTask.Title}' assumida por {techLead.Name}.");
             }
             else
@@ -74,7 +75,7 @@ namespace TaskManager.Models.Users
 
             while (continueMenu)
             {
-                string[] StatisticsMenu = { "Tarefas em Atraso", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas Em Progresso", "Tarefas com Impedimento", "Tarefas Aguardando Aprovação", "Alterar Status de uma Tarefa", "Voltar" };
+                string[] StatisticsMenu = { "Tarefas em Atraso", "Tarefas Não Iniciadas", "Tarefas Concluídas", "Tarefas Abandonadas", "Tarefas Em Progresso", "Tarefas com Impedimento", "Tarefas Aguardando Aprovação", "Alterar Status de uma Tarefa", "Voltar" };
                 Menu options = new Menu(StatisticsMenu);
                 int selected = options.ShowMenu(title: Title.HelloTechLead());
                 continueMenu = StatisticsSelectedChoice(selected);
@@ -90,24 +91,27 @@ namespace TaskManager.Models.Users
                     ViewTasksOverdue();
                     return true;
                 case 1:
-                    ViewTasksWithStatus(Enum.TaskStatus.Completed);
+                    ViewTasksWithStatus(Enum.TaskStatus.NotStarted);
                     return true;
                 case 2:
-                    ViewTasksWithStatus(Enum.TaskStatus.Abandoned);
+                    ViewTasksWithStatus(Enum.TaskStatus.Completed);
                     return true;
                 case 3:
-                    ViewTasksWithStatus(Enum.TaskStatus.InProgress);
+                    ViewTasksWithStatus(Enum.TaskStatus.Abandoned);
                     return true;
                 case 4:
-                    ViewTasksWithStatus(Enum.TaskStatus.HasIssues);
+                    ViewTasksWithStatus(Enum.TaskStatus.InProgress);
                     return true;
                 case 5:
-                    ViewTasksWithStatus(Enum.TaskStatus.NeedsApproval);
+                    ViewTasksWithStatus(Enum.TaskStatus.HasIssues);
                     return true;
                 case 6:
-                    ChangeTaskStatus(this);
+                    ViewTasksWithStatus(Enum.TaskStatus.NeedsApproval);
                     return true;
                 case 7:
+                    ChangeTaskStatus(this);
+                    return true;
+                case 8:
                     return false;
                 default:
                     return false;
@@ -156,7 +160,7 @@ namespace TaskManager.Models.Users
                     selectedTask.SetStatus(newStatus.Value);
             }
             else
-                Console.WriteLine("Nenhuma tarefa disponível para alterar o status.");
+                Console.WriteLine("Nenhuma tarefa disponível para alterar o status. Lembre-se, você só pode alterar o status de uma tarefa a qual você é o Responsável.");
         }
     }
 }

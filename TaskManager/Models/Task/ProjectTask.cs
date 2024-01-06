@@ -25,17 +25,17 @@ namespace TaskManager.Models.Task
 
         private static int TaskIdCounter = 1;
 
-        public ProjectTask(string title, string description, User responsible, User assigne)
+        public ProjectTask(string title, string description, User responsible, User assigne, Enum.TaskStatus status)
         {
             TaskId = GenerateUniqueId.Generate(TaskIdCounter);
             Title = title;
             Description = description;
             Responsible = responsible;
             Assignee = assigne;
+            Status = status;
             CreatedAt = DateTime.Now;
             StartTime = null;
             Deadline = null;
-            Status = Enum.TaskStatus.NotStarted;
         }
 
         public void SetSchedule(DateTime startTime, DateTime deadline)

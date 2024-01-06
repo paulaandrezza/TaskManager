@@ -18,6 +18,7 @@ namespace TaskManager.Service
 
             string title = Utils.ReadString("Título: ");
             string description = Utils.ReadString("Descrição: ");
+            ProjectTask newTask;
 
             if (creator is TechLead)
             {
@@ -26,11 +27,10 @@ namespace TaskManager.Service
                 Menu options = new Menu(developersNames);
                 int selectedIndex = options.ShowMenu("Selecione um desenvolvedor: ");
                 assigne = developers[selectedIndex];
-            }
-
-            ProjectTask newTask = new ProjectTask(title, description, creator, assigne);
+                newTask = new ProjectTask(title, description, creator, assigne, Models.Enum.TaskStatus.NotStarted);
+            } else
+                newTask = new ProjectTask(title, description, creator, assigne, Models.Enum.TaskStatus.NeedsApproval);
             Program.AllTasks.Add(newTask);
-
             Console.WriteLine("Tarefa cadastrada com sucesso!");
         }
 
@@ -74,11 +74,11 @@ namespace TaskManager.Service
         {
             if (techLeaderIsResponsible)
                 return Program.AllTasks
-                    .Where(task => task.Status == Models.Enum.TaskStatus.NotStarted && task.Responsible == techLead)
+                    .Where(task => task.Responsible == techLead)
                     .ToList();
             else
                 return Program.AllTasks
-                    .Where(task => task.Status == Models.Enum.TaskStatus.NotStarted && task.Responsible != techLead)
+                    .Where(task => (task.Status == Models.Enum.TaskStatus.NotStarted || task.Status == Models.Enum.TaskStatus.NeedsApproval) && task.Responsible != techLead)
                     .ToList();
         }
 
@@ -163,7 +163,7 @@ namespace TaskManager.Service
             DateTime currentDate = DateTime.Now;
 
             return Program.AllTasks
-                .Where(task => task.Deadline.HasValue && task.Deadline < currentDate)
+                .Where(task => task.Deadline.HasValue && task.Deadline < currentDate && task.Status != Models.Enum.TaskStatus.Completed)
                 .ToList();
         }
 
