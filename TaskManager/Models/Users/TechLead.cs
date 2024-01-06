@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Models.Task;
 using TaskManager.Service;
 using TaskManager.UI;
 
@@ -71,6 +72,7 @@ namespace TaskManager.Models.Users
             switch (selected)
             {
                 case 0:
+                    ViewTasksOverdue();
                     return true;
                 case 1:
                     return true;
@@ -86,6 +88,20 @@ namespace TaskManager.Models.Users
                     return false;
                 default:
                     return false;
+            }
+        }
+
+        public void ViewTasksOverdue()
+        {
+            List<ProjectTask> tasksOverdue = TaskRepository.GetTasksOverdue();
+
+            if (tasksOverdue.Count == 0)
+                Console.WriteLine("Não há tarefas em atraso.");
+            else
+            {
+                Console.WriteLine("Tarefas em Atraso:");
+                foreach (var task in tasksOverdue)
+                    TaskRepository.PrintTaskDetails(task);
             }
         }
     }

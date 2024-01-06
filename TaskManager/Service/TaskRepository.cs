@@ -57,7 +57,7 @@ namespace TaskManager.Service
             }
         }
 
-        private static void PrintTaskDetails(ProjectTask task)
+        public static void PrintTaskDetails(ProjectTask task)
         {
             Console.WriteLine($"Task ID: {task.TaskId}");
             Console.WriteLine($"Título: {task.Title}");
@@ -141,6 +141,15 @@ namespace TaskManager.Service
             {
                 Console.WriteLine("Não há tarefas disponíveis para definir o cronograma.");
             }
+        }
+
+        public static List<ProjectTask> GetTasksOverdue()
+        {
+            DateTime currentDate = DateTime.Now;
+
+            return Program.AllTasks
+                .Where(task => task.Deadline.HasValue && task.Deadline < currentDate)
+                .ToList();
         }
     }
 }
